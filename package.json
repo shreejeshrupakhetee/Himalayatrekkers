@@ -1,0 +1,69 @@
+{
+    "private": true,
+    "scripts": {
+        "dev": "npm run development",
+        "development": "cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "watch": "npm run development -- --watch",
+        "watch-poll": "npm run watch -- --watch-poll",
+        "hot": "cross-env NODE_ENV=development node_modules/webpack-dev-server/bin/webpack-dev-server.js --inline --hot --config=node_modules/laravel-mix/setup/webpack.config.js",
+        "prod": "npm run production",
+        "production": "cross-env NODE_ENV=production node_modules/webpack/bin/webpack.js --no-progress --hide-modules --config=node_modules/laravel-mix/setup/webpack.config.js"
+    },
+    "devDependencies": {
+        "@babel/preset-react": "^7.14.5",
+        "@fullhuman/postcss-purgecss": "^3.0.0",
+        "@tailwindcss/line-clamp": "^0.2.0",
+        "@tailwindcss/postcss7-compat": "^2.0.3",
+        "autoprefixer": "^9.8.6",
+        "axios": "^0.19.2",
+        "babel-eslint": "^10.0.3",
+        "babel-plugin-dynamic-import-webpack": "^1.1.0",
+        "babel-plugin-syntax-dynamic-import": "^6.18.0",
+        "cross-env": "^7.0",
+        "laravel-mix": "^5.0.1",
+        "lodash": "^4.17.13",
+        "postcss": "^7.0.35",
+        "pretty-checkbox-vue": "^1.1.9",
+        "resolve-url-loader": "^3.1.0",
+        "sass": "^1.32.7",
+        "sass-loader": "^8.0.0",
+        "tailwindcss": "^2.0.3",
+        "vue": "^2.6.12",
+        "vue-fuse": "^2.1.0",
+        "vue-template-compiler": "^2.6.10"
+    },
+    "eslintConfig": {
+        "root": true,
+        "env": {
+            "node": true
+        },
+        "extends": [
+            "plugin:vue/essential",
+            "eslint:recommended"
+        ],
+        "rules": {
+            "no-console": "off"
+        },
+        "parserOptions": {
+            "parser": "babel-eslint"
+        }
+    },
+    "postcss": {
+        "plugins": {
+            "autoprefixer": []
+        }
+    },
+    "browserslist": [
+        "> 1%",
+        "last 2 versions",
+        "not ie <= 8"
+    ],
+    "dependencies": {
+        "laravel-mix-purgecss": "^6.0.0",
+        "laravel-vue-pagination": "^2.3.1",
+        "vue-social-sharing": "^2.4.7",
+        "vue-tiny-slider": "^0.1.39",
+        "vue2-smooth-scroll": "^1.5.1",
+        "uikit": "^3.1.4"
+    }
+}

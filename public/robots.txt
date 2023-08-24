@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+Disallow: /index.php/
+Sitemap: https://himalayantrekkers.com/sitemap.xml

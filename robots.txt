@@ -1,0 +1,5 @@
+User-agent: *
+Disallow:/index.php/
+https://himalayantrekkers.com/sitemap.xml
+
+

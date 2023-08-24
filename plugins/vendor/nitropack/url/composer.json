@@ -1,0 +1,12 @@
+{
+    "name": "nitropack/url",
+    "type": "library",
+    "description": "URL manipulation library",
+    "keywords": ["php", "url", "manipulation", "library"],
+    "authors": [
+        {"name": "Ivailo Hristov"}
+    ],
+    "autoload": {
+        "psr-4": { "NitroPack\\": "src/" }
+    }
+}
