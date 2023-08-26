@@ -108,7 +108,7 @@ Route::group(['middleware' => ['web', 'collapseSpace', 'removeComments']], funct
     Route::get('/countries', 'FrontEndController@getDestinations')->name('countries.index');
     Route::get('/activities', 'FrontEndController@getActivities')->name('allactivities.index');
     Route::get('/travelstyle', 'FrontEndController@getTravelstyles')->name('travelstyles.index');
-    
+
 
 
 
@@ -125,7 +125,7 @@ Route::group(['middleware' => ['web', 'collapseSpace', 'removeComments']], funct
         ->name('itinerary.index');
 
 
-   
+
     Route::get('/thank-you', 'FrontStaticController@thankyouinquiry')->name('thankyou');
     Route::get('/thank-you-for-subscribing', 'FrontStaticController@thankyousubs');
 
@@ -149,7 +149,7 @@ Route::group(['middleware' => ['web', 'collapseSpace', 'removeComments']], funct
 
 
 
-    
+
 
 
 }); //endof middlware
@@ -203,5 +203,4 @@ Route::get('/payment-gateway', function () {
     return view('indexphp');
 });
 
-Route::get('/initiate-payment', [PaymentController::class, 'index'])->name('initiate-payment');
-
+Route::get('/initiate-payment/{slug}', [PaymentController::class, 'index'])->name('initiate-payment');
