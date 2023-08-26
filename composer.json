@@ -24,7 +24,6 @@
         "spatie/laravel-missing-page-redirector": "^2.7",
         "spatie/laravel-responsecache": "^6.6",
         "tcg/voyager": "^1.4",
-        "thebikramlama/hbl": "^1.0",
         "unisharp/laravel-filemanager": "^2.2",
         "van-ons/laraberg": "^1.1"
     },

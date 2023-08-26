@@ -39,11 +39,11 @@
     <script custom-element="amp-selector" src="https://cdn.ampproject.org/v0/amp-selector-0.1.js" async></script>
     <script async custom-element="amp-social-share" src="https://cdn.ampproject.org/v0/amp-social-share-0.1.js">
     </script>
- 
-    
+
+
     <script async custom-element="amp-lightbox" src="https://cdn.ampproject.org/v0/amp-lightbox-0.1.js"></script>
     <script custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js" async></script>
-  
+
     <script custom-element="amp-instagram" src="https://cdn.ampproject.org/v0/amp-instagram-0.1.js" async></script>
     <script custom-element="amp-list" src="https://cdn.ampproject.org/v0/amp-list-0.1.js" async></script>
     <script custom-element="amp-form" src="https://cdn.ampproject.org/v0/amp-form-0.1.js" async></script>
@@ -246,8 +246,8 @@ $trips = array(1, 3, 241, 205, 223, 20, 43, 68, 225, 310, 56);
 
         }
     </script>
-    
-    
+
+
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
@@ -285,7 +285,7 @@ $trips = array(1, 3, 241, 205, 223, 20, 43, 68, 225, 310, 56);
       @endif
     }
     </script>
-    
+
     <script type="application/ld+json">
         {
             "@context": "http://schema.org",
@@ -349,7 +349,7 @@ $trips = array(1, 3, 241, 205, 223, 20, 43, 68, 225, 310, 56);
     "vars": {
                 "GA4_MEASUREMENT_ID": "G-4GS7CHE41Y",
                 "GA4_ENDPOINT_HOSTNAME": "www.google-analytics.com",
-                "DEFAULT_PAGEVIEW_ENABLED": true,    
+                "DEFAULT_PAGEVIEW_ENABLED": true,
                 "GOOGLE_CONSENT_ENABLED": false,
                 "WEBVITALS_TRACKING": true,
                 "PERFORMANCE_TIMING_TRACKING": true
@@ -500,7 +500,7 @@ $trips = array(1, 3, 241, 205, 223, 20, 43, 68, 225, 310, 56);
 
                             </a>
                             <span class="icon-chevron-right text-xs text-center ml-1" aria-hidden="true"></span>
-                            
+
                             <p class="ml-1 inline-block text-sm text-light-gray font-semibold">{{ $detail->title }}</p>
 
                         </div>
@@ -544,7 +544,7 @@ $trips = array(1, 3, 241, 205, 223, 20, 43, 68, 225, 310, 56);
                                 @else
                                 <span class="md:text-xl font-semibold ml-1">
                                     US$ {{ number_format($detail->price) }}</span>
-                            {{-- 
+                            {{--
                                 <span class="text-sm md:text-base font-medium line-through">
                                 ${{number_format($detail->price * 1.25)}}
                             </span>
@@ -560,7 +560,7 @@ $trips = array(1, 3, 241, 205, 223, 20, 43, 68, 225, 310, 56);
                             {{$detail->discount.'% off'}}
                         </span>
                     {{-- </div> --}}
-                    @endif 
+                    @endif
                 </div>
                     {{-- <button on="tap:forma.scrollTo(duration=200)" role="button" tabindex="0"
                         class="py-2 px-4 rounded-full text-white focus:outline-none w-auto mx-auto bg-regal-blue hover:bg-hover-yellow font-semibold mt-5 hover:text-black uppercase">Fixed
@@ -573,12 +573,9 @@ $trips = array(1, 3, 241, 205, 223, 20, 43, 68, 225, 310, 56);
                         <button on="tap:forma.scrollTo(duration=200)" role="button" tabindex="0"
                             class="hidden lg:block py-1 px-2 text-sm rounded-full text-white focus:outline-none bg-regal-red hover:bg-hover-yellow font-semibold hover:text-black uppercase xl:text-base">Inquire
                             Now</button>
-                            <form action="{{ route('initiate-payment') }}" method="POST">
-                                @csrf
-                                <button type="submit">Book Now </button>
-                            </form>
+                            <a href="{{ route("initiate-payment", $detail->slug) }}">Book Now</a>
                             </div>
-                            
+
 
 <!-- Your existing code -->
                         <div class="social">

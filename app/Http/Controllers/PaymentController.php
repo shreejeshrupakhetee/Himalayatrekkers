@@ -2,14 +2,28 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
 use Exception;
+use Illuminate\Http\Request;
+use App\Http\Services\HomeService;
+use Illuminate\Support\Facades\Http;
+use App\Http\Controllers\FrontEndController;
 
 class PaymentController extends Controller
 {
-    public function index()
+    public $homeService;
+
+    public function __construct(HomeService $homeService)
     {
+        $this->homeService = $homeService;
+    }
+
+    public function index($slug)
+    {
+        $controller = new FrontEndController($this->homeService);
+        $priceDetails = $controller->newTrip($slug)->detail;
+
+        $price = $priceDetails->price - ($priceDetails->discount * $priceDetails->price / 100);
+        dd($price);
         $encryptionKeyId = env('HBL_ENCRYPTION_KEY_ID');
         $pacoEncryptionPublicKey = env('HBL_PACO_ENCRYPTION_PUBLIC_KEY');
         $pacoSigningPublicKey = env('HBL_PACO_SIGNING_PUBLIC_KEY');
