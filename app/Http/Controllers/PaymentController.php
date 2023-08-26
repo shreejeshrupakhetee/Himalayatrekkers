@@ -3,9 +3,8 @@
 namespace App\Http\Controllers;
 
 use Exception;
-use Illuminate\Http\Request;
+use App\Services\Hbl;
 use App\Http\Services\HomeService;
-use Illuminate\Support\Facades\Http;
 use App\Http\Controllers\FrontEndController;
 
 class PaymentController extends Controller
@@ -23,71 +22,38 @@ class PaymentController extends Controller
         $priceDetails = $controller->newTrip($slug)->detail;
 
         $price = $priceDetails->price - ($priceDetails->discount * $priceDetails->price / 100);
-        dd($price);
-        $encryptionKeyId = env('HBL_ENCRYPTION_KEY_ID');
-        $pacoEncryptionPublicKey = env('HBL_PACO_ENCRYPTION_PUBLIC_KEY');
-        $pacoSigningPublicKey = env('HBL_PACO_SIGNING_PUBLIC_KEY');
-
-        $payload = [
-            'amount' => 100,
-            'currency' => 'NPR',
-            'merchantId' => 123456,
-            'invoiceNo' => '1234567890',
-            'productDesc' => 'Test payment',
+        $orderNo = rand();
+        $data = [ // Update this with customer info
+            "name" => "Test Name",
+            "email" => "example@email.com",
+            "product_description" => "Tri[",
+            "currency" => "thb",
+            "amount" => $price * 100,
         ];
 
-        $encryptedPayload = encryptPayload($payload, $encryptionKeyId, $pacoEncryptionPublicKey);
+        $hbl = new Hbl("thb"); // Update this once live
+        $paymentResponse = $hbl->execute($data, $orderNo);
+        $paymentResponse = json_decode($paymentResponse)->response;
 
-        $response = Http::post('https://ecommerce.himalayanbank.com/payment/api/v1/initiate', [
-            'encryptedPayload' => $encryptedPayload,
-        ]);
-
-        if ($response->status() == 200) {
-            $data = json_decode($response->body(), true);
-
-            return view('hbl.payment', [
-                'data' => $data,
-            ]);
-        } else {
-            return redirect()->back()->with('error', $response->body());
-        }
-    }
-
-    public function payment()
-    {
-        $data = request()->all();
-
-        $decryptedPayload = decryptPayload($data['encryptedPayload'], $encryptionKeyId, $pacoSigningPublicKey);
-
-        if ($decryptedPayload['status'] == 'APPROVED') {
-            return redirect()->route('success');
-        } else {
-            return redirect()->route('failed');
-        }
-    }
-
-    private function encryptPayload($payload, $encryptionKeyId, $pacoEncryptionPublicKey)
-    {
-        $pacoRequest = [
-            'encryptionKeyId' => $encryptionKeyId,
-            'payload' => $payload,
-        ];
-
-        $pacoRequestJson = json_encode($pacoRequest);
-        $pacoRequestEncrypted = encrypt($pacoRequestJson, $pacoEncryptionPublicKey);
-
-        return $pacoRequestEncrypted;
-    }
-
-    private function decryptPayload($encryptedPayload, $encryptionKeyId, $pacoSigningPublicKey)
-    {
-        $pacoRequest = decrypt($encryptedPayload, $pacoSigningPublicKey);
-        $pacoRequestJson = json_decode($pacoRequest, true);
-
-        if ($pacoRequestJson['encryptionKeyId'] != $encryptionKeyId) {
-            throw new Exception('Invalid encryption key ID');
+        if (!$paymentResponse || !isset($paymentResponse->ApiResponse)) {
+            throw new Exception("Something went wrong. Please try again.");
         }
 
-        return $pacoRequestJson['payload'];
+        if (!isset($paymentResponse->Data)) {
+            throw new Exception($paymentResponse->ApiResponse->MarketingDescription);
+        }
+
+        $isSuccess = $paymentResponse->ApiResponse->ResponseDescription == "Success";
+        $paymentPageUrl = $paymentResponse->Data->paymentPage->paymentPageURL;
+
+        if (!$paymentPageUrl) {
+            throw new Exception("Something went wrong. Please try again.");
+        }
+
+        if (!$isSuccess) {
+            throw new Exception($paymentResponse->ApiResponse->MarketingDescription);
+        }
+
+        return redirect($paymentPageUrl);
     }
 }
